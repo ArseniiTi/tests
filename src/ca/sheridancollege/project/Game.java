@@ -19,9 +19,9 @@ import java.util.Scanner;
 public class Game {
  
     
-   public static void main(String[] args) {
+   public static void main(String[] args) {       
        
-        Scanner console= new Scanner(System.in);  // Create a Scanner object
+       Scanner console= new Scanner(System.in);  // Create a Scanner object
         System.out.println("Enter player name:");
 
         String userName = console.nextLine(); // Read user input
@@ -37,14 +37,44 @@ public class Game {
 
         //Card _card = new Card(Card.Suit.values()[randomInt(3)],Card.Value.values()[randomInt(12)]);
         
-        //System.out.print(Card.Suit.values()[randomInt(3)]);
-        dealing.deal(_player);
-        dealing.deal(_dealer);
+        //System.out.println(Card.Suit.values()[randomInt(3)]);
+        dealing.shuffle(_player);
+        dealing.shuffle(_dealer);
         
-        System.out.print(_player.get_hand().showCards().size());
+        //System.out.println(_player.get_hand().showCards().size() + "   " + randomInt(3));
         
         System.out.println("The value of your cards are: " + handValue(_player.get_hand()));
+        System.out.println("Dealer shows: " + _dealer.get_hand().showCards().get(0).getValue() + " of " +_dealer.get_hand().showCards().get(0).getSuit());
+        
+        System.out.println("Hit? Type y for Hit and n for Stay");
+        String confirm = console.nextLine();
+        console.nextLine();
+        
+        while (confirm.equals("y")){           
 
+            dealing.deal(_player);
+            System.out.println("You drew: " + _player.get_hand().showCards().get(0).getValue() + " of " +_player.get_hand().showCards().get(0).getSuit());
+            System.out.println("The value of your cards are: " + handValue(_player.get_hand()));                     
+
+            if (handValue(_player.get_hand()) >21){
+                declareWinner(_player, bet, _dealer);
+                confirm="";
+            }
+            else {
+                System.out.println("Hit? Type y for Hit and n for Stay");
+                confirm = console.nextLine();
+            }
+        }
+        
+        if (handValue(_player.get_hand()) <=21){
+            
+            while (handValue(_dealer.get_hand())<16){
+                System.out.println("dealer under 16, hitting");
+                dealing.deal(_dealer);
+            }
+            
+            declareWinner(_player, bet, _dealer);
+        }        
 }
     static public int handValue(Hand _hand){
 
@@ -58,7 +88,7 @@ public class Game {
                 tmp=9;            
             }
 
-            if (tmp==0 || value + 11 <= 21) {
+            if (tmp==0 && value + 11 <= 21) {
                 tmp=10;            
             }
 
@@ -75,10 +105,26 @@ public class Game {
 		return rand;
         }
 
-    public void declareWinner(){;
-
-   
-    
-
-}
+    static public void declareWinner(Player player, double playbet, Player dealer){   
+        int valuePlayer = handValue(player.get_hand());
+        int valueDealer = handValue(dealer.get_hand());
+        
+        if (valuePlayer >21){
+            System.out.println("You lose, busted out! Your value:" +  valuePlayer);
+            player.setMoney(player.getMoney()-playbet);
+        }
+        else if (valueDealer > 21){
+            System.out.println( "You win, dealer busted out! Dealer value:" +  valueDealer);
+            player.setMoney(player.getMoney()+playbet);
+        }
+        else if (valuePlayer > valueDealer){
+            System.out.println("You win! You got " + valuePlayer + " and dealer got " + valueDealer + "!");
+            player.setMoney(player.getMoney()+playbet);
+        }
+        else {
+            System.out.println( "You lose! You got " + valuePlayer + " and dealer got " + valueDealer + "!");
+            player.setMoney(player.getMoney()-playbet);
+        }        
+       
+    }
 }
