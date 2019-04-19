@@ -15,8 +15,8 @@ public class Card
 {
         public enum Suit {HEARTS, CLUBS,SPADES,DIAMONDS};
         public enum Value{ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING};
-        private final Suit suit;
-        private final Value value;
+        private Suit suit;
+        private Value value;
         
         public Card(Suit s, Value gVal)
         {
@@ -32,14 +32,14 @@ public class Card
 		return this.suit;
 	}
         
-      //public void settValue(Value val) {
-	//	return this.value;
-	//}
+      public void settValue(Value val) {
+		value = val;
+	}
 
 	
-	//public void settSuit(Suit suit) {
-	//	return this.value;
-	//}
+	public void settSuit(Suit s) {
+		suit = s;
+	}
 
     //default modifier for child classes
     

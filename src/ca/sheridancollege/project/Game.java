@@ -35,9 +35,13 @@ public class Game {
 
         ShuffleDeal dealing = new ShuffleDeal();
 
-        System.out.println("Dealing Cards!");
+        //Card _card = new Card(Card.Suit.values()[randomInt(3)],Card.Value.values()[randomInt(12)]);
+        
+        //System.out.print(Card.Suit.values()[randomInt(3)]);
         dealing.deal(_player);
         dealing.deal(_dealer);
+        
+        System.out.print(_player.get_hand().showCards().size());
         
         System.out.println("The value of your cards are: " + handValue(_player.get_hand()));
 
@@ -65,6 +69,11 @@ public class Game {
         return value;
 
     }
+    
+    static public int randomInt(int max) {
+		int rand = (int)(Math.random() * max);
+		return rand;
+        }
 
     public void declareWinner(){;
 

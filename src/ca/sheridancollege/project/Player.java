@@ -5,6 +5,8 @@
  */
 package ca.sheridancollege.project;
 
+import java.util.ArrayList;
+
 /**
  * A class that models each Player in the game. Players have an identifier, which should be unique.
  * @author dancye, 2018
@@ -12,8 +14,10 @@ package ca.sheridancollege.project;
 public class Player 
 {
     private String playerID;
-	private double money;
-	private Hand _hand; //the unique ID for this player
+    private double money;	
+    private ArrayList<Card> cards = new ArrayList<Card>();
+    private Hand _hand = new Hand(cards);//the unique ID for this player
+        //private ArrayList<Card> cards = new ArrayList<Card>();
     
     /**
 	 * A constructor that allows you to set the player's unique ID
@@ -23,7 +27,8 @@ public class Player
     public Player(String name, double money)
     {
         playerID= name;
-        this.money = money;
+        this.money = money;        
+        
     }
     
     /**
