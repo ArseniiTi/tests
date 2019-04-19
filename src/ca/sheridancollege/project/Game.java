@@ -21,6 +21,7 @@ public class Game {
     
    public static void main(String[] args) {       
        
+       String play = "y"; 
        Scanner console= new Scanner(System.in);  // Create a Scanner object
         System.out.println("Enter player name:");
 
@@ -29,52 +30,69 @@ public class Game {
         Player _player = new Player(userName, 100);
         Dealer _dealer = new Dealer("Dealer", 100);
 
-        System.out.println("Make a bet!");
+        while (play.equals("y")){
+            System.out.println("Make a bet!");
 
-        double bet = console.nextDouble();
+            double bet = console.nextDouble();
+            
+            if (_player.getMoney()<bet){
+                bet = _player.getMoney();
+                System.out.println("No money for that bet! You are betting what you have left instead: " + bet);
+            }
 
-        ShuffleDeal dealing = new ShuffleDeal();
+            ShuffleDeal dealing = new ShuffleDeal();
 
-        //Card _card = new Card(Card.Suit.values()[randomInt(3)],Card.Value.values()[randomInt(12)]);
-        
-        //System.out.println(Card.Suit.values()[randomInt(3)]);
-        dealing.shuffle(_player);
-        dealing.shuffle(_dealer);
-        
-        //System.out.println(_player.get_hand().showCards().size() + "   " + randomInt(3));
-        
-        System.out.println("The value of your cards are: " + handValue(_player.get_hand()));
-        System.out.println("Dealer shows: " + _dealer.get_hand().showCards().get(0).getValue() + " of " +_dealer.get_hand().showCards().get(0).getSuit());
-        
-        System.out.println("Hit? Type y for Hit and n for Stay");
-        String confirm = console.nextLine();
-        console.nextLine();
-        
-        while (confirm.equals("y")){           
+            //Card _card = new Card(Card.Suit.values()[randomInt(3)],Card.Value.values()[randomInt(12)]);
 
-            dealing.deal(_player);
-            System.out.println("You drew: " + _player.get_hand().showCards().get(0).getValue() + " of " +_player.get_hand().showCards().get(0).getSuit());
-            System.out.println("The value of your cards are: " + handValue(_player.get_hand()));                     
+            //System.out.println(Card.Suit.values()[randomInt(3)]);
+            dealing.shuffle(_player);
+            dealing.shuffle(_dealer);
 
-            if (handValue(_player.get_hand()) >21){
+            //System.out.println(_player.get_hand().showCards().size() + "   " + randomInt(3));
+
+            System.out.println("The value of your cards are: " + handValue(_player.get_hand()));
+            System.out.println("Dealer shows: " + _dealer.get_hand().showCards().get(0).getValue() + " of " +_dealer.get_hand().showCards().get(0).getSuit());
+
+            System.out.println("Hit? Type y for Hit and n for Stay");
+            String confirm = console.nextLine();
+            console.nextLine();
+
+            while (confirm.equals("y")){           
+
+                dealing.deal(_player);
+                System.out.println("You drew: " + _player.get_hand().showCards().get(0).getValue() + " of " +_player.get_hand().showCards().get(0).getSuit());
+                System.out.println("The value of your cards are: " + handValue(_player.get_hand()));                     
+
+                if (handValue(_player.get_hand()) >21){
+                    declareWinner(_player, bet, _dealer);
+                    confirm="";
+                }
+                else {
+                    System.out.println("Hit? Type y for Hit and n for Stay");
+                    confirm = console.nextLine();
+                }
+            }
+
+            if (handValue(_player.get_hand()) <=21){
+
+                while (handValue(_dealer.get_hand())<16){
+                    System.out.println("dealer under 16, hitting");
+                    dealing.deal(_dealer);
+                }
+
                 declareWinner(_player, bet, _dealer);
-                confirm="";
             }
-            else {
-                System.out.println("Hit? Type y for Hit and n for Stay");
-                confirm = console.nextLine();
+            
+            if (_player.getMoney()>0){
+            
+            System.out.println("Play again? Type y for yes, n for no");
+            play= console.nextLine();
             }
+            
+            else play = "";
+            System.out.println("Out of money! Please visit the nearest ATM or loan shark!");
+            
         }
-        
-        if (handValue(_player.get_hand()) <=21){
-            
-            while (handValue(_dealer.get_hand())<16){
-                System.out.println("dealer under 16, hitting");
-                dealing.deal(_dealer);
-            }
-            
-            declareWinner(_player, bet, _dealer);
-        }        
 }
     static public int handValue(Hand _hand){
 
