@@ -17,12 +17,12 @@ import java.util.Scanner;
 
 
 public class Game {
-
-
-    public static void main(String[] args) {
-
-        String play = "y";
-        Scanner console= new Scanner(System.in);  // Create a Scanner object
+ 
+    
+   public static void main(String[] args) {       
+       
+       String play = "y"; 
+       Scanner console= new Scanner(System.in);  // Create a Scanner object
         System.out.println("Enter player name:");
 
         String userName = console.nextLine(); // Read user input
@@ -34,11 +34,10 @@ public class Game {
             System.out.println("Make a bet!");
 
             double bet = console.nextDouble();
-
+            
             if (_player.getMoney()< bet){
                 bet = _player.getMoney();
                 System.out.println("No money for that bet! You are betting what you have left instead: " + bet);
-                break;
             }
 
             ShuffleDeal dealing = new ShuffleDeal();
@@ -55,13 +54,15 @@ public class Game {
             System.out.println("Dealer shows: " + _dealer.get_hand().showCards().get(0).getValue() + " of " +_dealer.get_hand().showCards().get(0).getSuit());
 
             System.out.println("Hit? Type y for Hit and n for Stay");
-            String confirm = console.nextLine();
             console.nextLine();
-
+            String confirm = console.nextLine();
+            int i = 2;
             while (confirm.equals("y")){
 
+                //int i = 2;
                 dealing.deal(_player);
-                System.out.println("You drew: " + _player.get_hand().showCards().get(0).getValue() + " of " +_player.get_hand().showCards().get(0).getSuit());
+                System.out.println("You drew: " + _player.get_hand().showCards().get(i).getValue() + " of " +_player.get_hand().showCards().get(i).getSuit());
+                i++;
                 System.out.println("The value of your cards are: " + handValue(_player.get_hand()));
 
                 if (handValue(_player.get_hand()) >21){
@@ -83,18 +84,19 @@ public class Game {
 
                 declareWinner(_player, bet, _dealer);
             }
-
+            
             if (_player.getMoney()>0){
-
-                System.out.println("Play again? Type y for yes, n for no");
-                play= console.nextLine();
+            
+            System.out.println("Play again? Type y for yes, n for no");
+            play= console.nextLine();
             }
+            else {play = "";
+                System.out.println("Out of money! Please visit the nearest ATM or loan shark!");
 
-            else play = "";
-            System.out.println("Out of money! Please visit the nearest ATM or loan shark!");
-
+            }
+            
         }
-    }
+}
     static public int handValue(Hand _hand){
 
         int value = 0;
@@ -104,30 +106,30 @@ public class Game {
             int tmp = _hand.showCards().get(i).getValue().ordinal();
 
             if (tmp==10 || tmp==11 || tmp==12) {
-                tmp=9;
+                tmp=9;            
             }
 
             if (tmp==0 && value + 11 <= 21) {
-                tmp=10;
+                tmp=10;            
             }
 
 
             value = value + tmp +1;
         }
-
+    
         return value;
 
     }
+    
+     public static int randomInt(int max) {
+		int rand = (int)(Math.random() * max);
+		return rand;
+        }
 
-    static public int randomInt(int max) {
-        int rand = (int)(Math.random() * max);
-        return rand;
-    }
-
-    static public void declareWinner(Player player, double playbet, Player dealer){
+    static public void declareWinner(Player player, double playbet, Player dealer){   
         int valuePlayer = handValue(player.get_hand());
         int valueDealer = handValue(dealer.get_hand());
-
+        
         if (valuePlayer >21){
             System.out.println("You lose, busted out! Your value:" +  valuePlayer);
             player.setMoney(player.getMoney()-playbet);
@@ -147,7 +149,7 @@ public class Game {
             System.out.println( "You lose! You got " + valuePlayer + " and dealer got " + valueDealer + "!");
             player.setMoney(player.getMoney()-playbet);
             System.out.println("Your money " + player.getMoney());
-        }
-
+        }        
+       
     }
 }
