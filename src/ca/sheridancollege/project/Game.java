@@ -21,34 +21,50 @@ public class Game {
     
    public static void main(String[] args) {
        
-    Scanner console= new Scanner(System.in);  // Create a Scanner object
-    System.out.println("Enter player name:");
+        Scanner console= new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter player name:");
 
-    String userName = console.nextLine(); // Read user input
-      
-    Player _player = new Player(userName, 100);
-    Dealer _dealer = new Dealer("Dealer", 100);
-    
-    ShuffleDeal dealing = new ShuffleDeal();
-    
-    dealing.deal(_player);
-    dealing.deal(_dealer);
+        String userName = console.nextLine(); // Read user input
 
-}
-    
-    public int handValue(Hand _hand){
+        Player _player = new Player(userName, 100);
+        Dealer _dealer = new Dealer("Dealer", 100);
 
-   int value = 0;
-   
-   for(int i = 0; i < _hand.showCards().size(); i++) {
-       
-       Value tmp = _hand.showCards().get(i).getValue();
-       
-       if (tmp == Value.TWO)
-   }
-    
+        System.out.println("Make a bet!");
+
+        double bet = console.nextDouble();
+
+        ShuffleDeal dealing = new ShuffleDeal();
+
+        System.out.println("Dealing Cards!");
+        dealing.deal(_player);
+        dealing.deal(_dealer);
+        
+        System.out.println("The value of your cards are: " + handValue(_player.get_hand()));
 
 }
+    static public int handValue(Hand _hand){
+
+        int value = 0;
+
+        for(int i = 0; i < _hand.showCards().size(); i++) {
+
+            int tmp = _hand.showCards().get(i).getValue().ordinal();
+
+            if (tmp==10 || tmp==11 || tmp==12) {
+                tmp=9;            
+            }
+
+            if (tmp==0 || value + 11 <= 21) {
+                tmp=10;            
+            }
+
+
+            value = value + tmp +1;
+        }
+    
+        return value;
+
+    }
 
     public void declareWinner(){;
 
