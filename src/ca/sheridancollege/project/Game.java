@@ -35,14 +35,15 @@ public class Game {
         while (play.equals("y")) {
             System.out.println("Make a bet!");
 
-            double bet = 0.0;
+             double bet = 0.0;
             try {
                 bet = console.nextDouble();
             } catch (Exception e) {
                 System.out.println("Ooops, wrong number been entered, please try again!");
-                break;
+                console.nextLine();
+                continue;
             }
-
+            
             if (_player.getMoney() < bet) {
                 bet = _player.getMoney();
                 System.out.println("Dear, " + userName + " no money for that bet! You are betting what you have left instead: " + bet);
