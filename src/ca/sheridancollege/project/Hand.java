@@ -13,27 +13,24 @@ import java.util.ArrayList;
  * The group of cards has a maximum size attribute which is flexible for reuse.
  * @author dancye
  */
-public class Hand 
-{
-   
+public class Hand {
+
     //The group of cards, stored in an ArrayList
-    private ArrayList<Card> cards;	
-    
-    public Hand(ArrayList<Card> cards)
-    {
+    private ArrayList<Card> cards;
+
+    public Hand(ArrayList<Card> cards) {
         this.cards = cards;
     }
-    
+
     /**
      * A method that will get the group of cards as an ArrayList
+     *
      * @return the group of cards.
      */
-    public ArrayList<Card> showCards()
-    {
+    public ArrayList<Card> showCards() {
         return cards;
-    }  
-    
+    }
 
- 
-    
+
 }//end class
+
