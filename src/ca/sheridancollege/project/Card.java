@@ -11,41 +11,39 @@ package ca.sheridancollege.project;
  * should remember to add themselves as a modifier.
  * @author dancye, 2018
  */
-public class Card 
-{
-        public enum Suit {HEARTS, CLUBS,SPADES,DIAMONDS};
-        public enum Value{ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING};
-        private Suit suit;
-        private Value value;
-        
-        public Card(Suit s, Value gVal)
-        {
-           suit =s;
-           value= gVal;
-        }
-	public Value getValue() {
-		return this.value;
-	}
+public class Card {
+    public enum Suit {HEARTS, CLUBS, SPADES, DIAMONDS}
 
-	
-        public Suit getSuit() {
-		return this.suit;
-	}
-        
-      public void settValue(Value val) {
-		value = val;
-	}
+    ;
 
-	
-	public void settSuit(Suit s) {
-		suit = s;
-	}
+    public enum Value {ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING}
 
-    //default modifier for child classes
-    
-    /**
-     * Students should implement this method for their specific children classes 
-     * @return a String representation of a card. Could be an UNO card, a regular playing card etc.
-     */
-  
+    ;
+    private Suit suit; //object of suit
+    private Value value; //object of values
+
+    public Card(Suit s, Value gVal) {
+        suit = s;
+        value = gVal;
+    }
+
+    public Value getValue() {
+        return this.value;
+    }
+
+
+    public Suit getSuit() {
+        return this.suit;
+    }
+
+    public void settValue(Value val) {
+        value = val;
+    }
+
+
+    public void settSuit(Suit s) {
+        suit = s;
+    }
+
+
 }
