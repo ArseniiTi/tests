@@ -29,8 +29,8 @@ public class Game {
 
         String userName = console.nextLine(); // Read user input
 
-        Player _player = new Player(userName, 100);
-        Dealer _dealer = new Dealer("Dealer", 100);
+        Player _player = new Player(userName, 100); //object of player
+        Dealer _dealer = new Dealer("Dealer", 100); //object of dealer
 
         while (play.equals("y")) {
             System.out.println("Make a bet!");
@@ -46,21 +46,21 @@ public class Game {
             if (_player.getMoney() < bet) {
                 bet = _player.getMoney();
                 System.out.println("Dear, " + userName + " no money for that bet! You are betting what you have left instead: " + bet);
-                break;
+                break; //if user doesn't have enough money then user cannot play
             }
 
-            ShuffleDeal dealing = new ShuffleDeal();
+            ShuffleDeal dealing = new ShuffleDeal(); //object of ShuffleDeal
 
-            dealing.shuffle(_player);
-            dealing.shuffle(_dealer);
-            
+            dealing.shuffle(_player); //shuffle for the player
+            dealing.shuffle(_dealer); //shuffle for the dealer
+
 
             System.out.println("The value of your cards are: " + handValue(_player.get_hand()));
             System.out.println("Dealer shows: " + _dealer.get_hand().showCards().get(0).getValue() + " of " + _dealer.get_hand().showCards().get(0).getSuit());
 
             System.out.println("Hit? Type y for Hit and n for Stay");
             console.nextLine();
-            String confirm = console.nextLine();
+            String confirm = console.nextLine(); 
             int i = 2;
             while (confirm.equals("y")) {
 
@@ -94,7 +94,7 @@ public class Game {
                 play = console.nextLine();
             } else {
                 play = "";
-                System.out.println("Dear, " + userName + " You out of money! Please visit the nearest ATM or loan shark!");
+                System.out.println("Dear, " + userName + " You out of money! Please visit the nearest ATM or loan shark!"); //user doesn't have the money
 
             }
 
@@ -135,8 +135,8 @@ public class Game {
 
 
     static public void declareWinner(Player player, double playbet, Player dealer) {
-        int valuePlayer = handValue(player.get_hand());
-        int valueDealer = handValue(dealer.get_hand());
+        int valuePlayer = handValue(player.get_hand()); //get hand of player
+        int valueDealer = handValue(dealer.get_hand()); //get hand of dealer
 
         if (valuePlayer > 21) {
             System.out.println("You lose, busted out! Your value:" + valuePlayer);
