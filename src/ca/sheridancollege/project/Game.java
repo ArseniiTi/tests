@@ -17,25 +17,49 @@ import java.util.Scanner;
 
 
 public class Game {
-
+    private static int money;
     /**
      * This method starts the game and has infinite loop until user not lose money or want to exit
      */
     public static void main(String[] args) {
 
+        Game game = new Game();
         String play = "y";
         Scanner console = new Scanner(System.in);  // Create a Scanner object
-        System.out.println("Enter player name:");
+        System.out.println("Welcome to our club! For the security purposes we will ask your to make couple exercise. Let's start.\n");
+        System.out.println("Enter player name (Must contain only letters):");
 
         String userName = console.nextLine(); // Read user input
 
-        Player _player = new Player(userName, 100); //object of player
-        Dealer _dealer = new Dealer("Dealer", 100); //object of dealer
+        if(game.isNumeric(userName)){
+            System.out.println("Your name is valid!");
+        }
+        else {
+            System.out.println("Not today! You cannot enter to our club");
+            System.exit(0); //user cannot enter to our club
+        }
+
+        System.out.println("Enter number of your money which you have with you! Note: should be more then 100 or you cannot enter to our game!");
+
+         money = console.nextInt();
+
+
+
+         if(game.money(money)){
+             System.out.println("Welcome to the game: " + userName);
+        }
+        else {
+             System.out.println("Not today!");
+             System.exit(0); //user cannot play in our game
+         }
+
+        Player _player = new Player(userName, money); //object of player
+        Dealer _dealer = new Dealer("Dealer", money); //object of dealer
 
         while (play.equals("y")) {
             System.out.println("Make a bet!");
 
-             double bet = 0.0;
+            double bet = 0.0;
             try {
                 bet = console.nextDouble();
             } catch (Exception e) {
@@ -43,7 +67,7 @@ public class Game {
                 console.nextLine();
                 continue;
             }
-            
+
             if (_player.getMoney() < bet) {
                 bet = _player.getMoney();
                 System.out.println("Dear, " + userName + " no money for that bet! You are betting what you have left instead: " + bet);
@@ -61,7 +85,7 @@ public class Game {
 
             System.out.println("Hit? Type y for Hit and n for Stay");
             console.nextLine();
-            String confirm = console.nextLine(); 
+            String confirm = console.nextLine();
             int i = 2;
             while (confirm.equals("y")) {
 
@@ -106,6 +130,7 @@ public class Game {
     /**
      * This method calculate cards value in the hand of player
      */
+
     static public int handValue(Hand _hand) {
 
         int value = 0;
@@ -157,5 +182,27 @@ public class Game {
             System.out.println("Your money " + player.getMoney());
         }
 
+    }
+    /**
+     * This method allows player to enter money for the game
+     */
+
+    public boolean money(int money){
+        //Scanner console = new Scanner(System.in);
+        // money = console.nextInt();
+        if(money >= 100){
+            return true;
+        }else {
+            return false;
+        }
+    }
+    /**
+     * This method check that user enter a valid name
+     */
+    public boolean isNumeric(String userName)
+    {
+        if(!userName.matches("-?\\d+(\\.\\d+)?")){
+            return true;
+        }else return false;
     }
 }
